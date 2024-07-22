@@ -13,3 +13,38 @@ datasource db {
   // provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id        Int      @default(autoincrement()) @id
+  email     String   @unique
+  name      String
+  avatar    String?
+  cover     String?
+  country   String?
+  currency  String?
+  language  String?
+  creations Nft[]
+}
+
+model Nft {
+  id          Int        @default(autoincrement()) @id
+  createdAt   DateTime   @default(now())
+  name        String
+  description String?
+  published   Boolean?   @default(false)
+  author      User?      @relation(fields: [authorId], references: [id])
+  authorId    Int?
+  image       String
+  categories  Category[]
+  price       Float?     // Optional price field
+  isOnSale    Boolean?   @default(false) // Field to indicate if the NFT is on sale
+  isFree      Boolean?   @default(false) // Field to indicate if the NFT is free
+}
+
+model Category {
+  id        Int      @default(autoincrement()) @id
+  title     String
+  image     String?
+  creations Nft[]
+}
+
