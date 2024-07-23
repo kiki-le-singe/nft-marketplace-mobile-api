@@ -5,6 +5,8 @@ import { AppModule } from './modules/app/app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  // https://docs.nestjs.com/security/cors
+  app.enableCors();
   app.setGlobalPrefix('api');
 
   // https://docs.nestjs.com/security/helmet
