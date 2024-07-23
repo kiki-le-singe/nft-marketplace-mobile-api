@@ -7,6 +7,7 @@ async function bootstrap() {
 
   // https://docs.nestjs.com/security/cors
   app.enableCors();
+  // https://docs.nestjs.com/openapi/other-features#global-prefix
   app.setGlobalPrefix('api');
 
   // https://docs.nestjs.com/security/helmet
