@@ -1,10 +1,14 @@
 import { NestFactory } from '@nestjs/core';
+import helmet from 'helmet';
 import { AppModule } from './modules/app/app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.setGlobalPrefix('api');
+
+  // https://docs.nestjs.com/security/helmet
+  app.use(helmet());
 
   await app.listen(3002);
   console.log(
