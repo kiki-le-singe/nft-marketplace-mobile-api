@@ -1,3 +1,24 @@
+// TO SEE: https://docs.nestjs.com/recipes/prisma
+// TO SEE: some examples of how to use NestJS - https://github.com/nestjs/nest/tree/master/sample
+// TO SEE: should I use this to download the images? https://docs.nestjs.com/techniques/file-upload
+// TO SEE: How to fastly have a local SSL Proxy Server Manager: https://www.ophiuchi.dev/ or https://pinggy.io/blog/best_ngrok_alternatives/
+
+// TODO: finish to implement the User api.
+// TODO: implement the Category api.
+// TODO: implement the Nft api.
+// TODO: implement OpenAPI (swagger) https://docs.nestjs.com/openapi/introduction#example ???
+// TODO: implement Documentation (Compodoc) https://docs.nestjs.com/recipes/documentation ???
+// TODO: implement Testing https://docs.nestjs.com/fundamentals/testing ???
+
+// Put in README.md:
+// - https://docs.nestjs.com/recipes/prisma
+// - https://docs.nestjs.com/recipes/serve-static
+// - https://docs.nestjs.com/security
+// - https://docs.nestjs.com/security/helmet
+// - https://docs.nestjs.com/security/cors
+// - https://docs.nestjs.com/security/rate-limiting
+// - How to debug: 1. pnpm start:debug 2. chrome://inspect
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
