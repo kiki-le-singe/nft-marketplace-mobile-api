@@ -11,13 +11,14 @@
 // TODO: implement Testing https://docs.nestjs.com/fundamentals/testing ???
 
 // Put in README.md:
-// - https://docs.nestjs.com/recipes/prisma
+// - https://docs.nestjs.com/recipes/prisma && https://www.prisma.io/nestjs
 // - https://docs.nestjs.com/recipes/serve-static
 // - https://docs.nestjs.com/security
 // - https://docs.nestjs.com/security/helmet
 // - https://docs.nestjs.com/security/cors
 // - https://docs.nestjs.com/security/rate-limiting
 // - How to debug: 1. pnpm start:debug 2. chrome://inspect
+// - https://www.prisma.io/docs/orm/prisma-client/queries/crud
 
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
