@@ -15,15 +15,23 @@ datasource db {
 }
 
 model User {
-  id        Int      @default(autoincrement()) @id
-  email     String   @unique
+  id        Int             @default(autoincrement()) @id
+  email     String          @unique
   name      String
+  creations Nft[]
+  profile   ExtendedProfile?
+}
+
+model ExtendedProfile {
+  id        Int    @id @default(autoincrement())
+  biography String
   avatar    String?
   cover     String?
   country   String?
   currency  String?
   language  String?
-  creations Nft[]
+  user      User   @relation(fields: [userId], references: [id])
+  userId    Int    @unique
 }
 
 model Nft {
@@ -39,12 +47,13 @@ model Nft {
   price       Float?     // Optional price field
   isOnSale    Boolean?   @default(false) // Field to indicate if the NFT is on sale
   isFree      Boolean?   @default(false) // Field to indicate if the NFT is free
+  views       Int        @default(0)
+  likes       Int        @default(0)
 }
 
 model Category {
   id        Int      @default(autoincrement()) @id
-  title     String
+  name      String
   image     String?
   creations Nft[]
 }
-
