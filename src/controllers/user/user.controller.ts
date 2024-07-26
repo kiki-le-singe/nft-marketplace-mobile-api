@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, NotFoundException, Param } from '@nestjs/common';
 import { User } from '@prisma/client';
 import { UserService } from 'src/services/user/user.service';
 
@@ -8,7 +8,7 @@ export class UserController {
 
   @Get(':id')
   async getUserById(@Param('id') id: string): Promise<User> {
-    return this.userService.user(
+    const user = await this.userService.user(
       { id: Number(id) },
       {
         include: {
@@ -24,6 +24,12 @@ export class UserController {
         },
       },
     );
+
+    if (!user) {
+      throw new NotFoundException(`User with ID ${id} not found`);
+    }
+
+    return user;
   }
 
   @Get()
