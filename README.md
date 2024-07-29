@@ -3,9 +3,6 @@
 // TO SEE: should I use this to download the images? https://docs.nestjs.com/techniques/file-upload
 // TO SEE: How to fastly have a local SSL Proxy Server Manager: https://www.ophiuchi.dev/ or https://pinggy.io/blog/best_ngrok_alternatives/
 
-// TODO: finish to implement the User api.
-// TODO: implement the Category api.
-// TODO: implement the Nft api.
 // TODO: implement OpenAPI (swagger) https://docs.nestjs.com/openapi/introduction#example ???
 // TODO: implement Documentation (Compodoc) https://docs.nestjs.com/recipes/documentation ???
 // TODO: implement Testing https://docs.nestjs.com/fundamentals/testing ???
