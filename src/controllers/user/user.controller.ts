@@ -19,8 +19,14 @@ export class UserController {
 
   @Get(':id')
   async getUserById(@Param('id') id: string): Promise<User> {
+    const userId = Number(id);
+
+    if (Number.isNaN(userId)) {
+      throw new BadRequestException(`Invalid user ID: ${id}`);
+    }
+
     const user = await this.userService.user(
-      { id: Number(id) },
+      { id: userId },
       {
         include: {
           creations: true,
@@ -44,7 +50,7 @@ export class UserController {
   }
 
   @Get()
-  getUsers() {
+  async getUsers(): Promise<User[]> {
     return this.userService.users({});
   }
 
@@ -53,10 +59,10 @@ export class UserController {
     @Param('id') id: string,
     @Body() data: Prisma.UserUpdateInput,
   ): Promise<User> {
-    // Validate the user ID
     const userId = Number(id);
+
     if (Number.isNaN(userId)) {
-      throw new BadRequestException(`Invalid user ID ${id}`);
+      throw new BadRequestException(`Invalid user ID: ${id}`);
     }
 
     try {
@@ -72,10 +78,6 @@ export class UserController {
       return updatedUser;
     } catch (error) {
       console.error('Error updating user:', error);
-
-      if (error instanceof NotFoundException) {
-        throw error;
-      }
 
       throw new InternalServerErrorException('Failed to update user');
     }
@@ -98,7 +100,7 @@ export class UserController {
   async deleteUser(@Param('id') id: string): Promise<User> {
     const userId = Number(id);
     if (Number.isNaN(userId)) {
-      throw new BadRequestException('Invalid user ID');
+      throw new BadRequestException(`Invalid user ID: ${id}`);
     }
 
     try {
@@ -111,10 +113,6 @@ export class UserController {
       return deletedUser;
     } catch (error) {
       console.error('Error deleting user:', error);
-
-      if (error instanceof NotFoundException) {
-        throw error;
-      }
 
       throw new InternalServerErrorException('Failed to delete user');
     }
