@@ -7,6 +7,7 @@ import { AppController } from 'src/controllers/app/app.controller';
 import { AppService } from 'src/services/app/app.service';
 import { UserModule } from '../user/user.module';
 import { CategoryModule } from '../category/category.module';
+import { NftModule } from '../nft/nft.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { CategoryModule } from '../category/category.module';
     ]),
     UserModule,
     CategoryModule,
+    NftModule,
   ],
   controllers: [AppController],
   providers: [AppService],
