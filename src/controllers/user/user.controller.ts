@@ -1,5 +1,4 @@
 import {
-  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -9,6 +8,7 @@ import {
   Param,
   Post,
   Put,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { Prisma, User } from '@prisma/client';
 import { UserService } from 'src/services/user/user.service';
@@ -18,15 +18,9 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get(':id')
-  async getUserById(@Param('id') id: string): Promise<User> {
-    const userId = Number(id);
-
-    if (Number.isNaN(userId)) {
-      throw new BadRequestException(`Invalid user ID: ${id}`);
-    }
-
+  async getUserById(@Param('id', ParseIntPipe) id: number): Promise<User> {
     const user = await this.userService.user(
-      { id: userId },
+      { id },
       {
         include: {
           creations: true,
@@ -56,18 +50,12 @@ export class UserController {
 
   @Put(':id')
   async updateUser(
-    @Param('id') id: string,
+    @Param('id', ParseIntPipe) id: number,
     @Body() data: Prisma.UserUpdateInput,
   ): Promise<User> {
-    const userId = Number(id);
-
-    if (Number.isNaN(userId)) {
-      throw new BadRequestException(`Invalid user ID: ${id}`);
-    }
-
     try {
       const updatedUser = await this.userService.updateUser({
-        where: { id: userId },
+        where: { id },
         data,
       });
 
@@ -97,14 +85,9 @@ export class UserController {
   }
 
   @Delete(':id')
-  async deleteUser(@Param('id') id: string): Promise<User> {
-    const userId = Number(id);
-    if (Number.isNaN(userId)) {
-      throw new BadRequestException(`Invalid user ID: ${id}`);
-    }
-
+  async deleteUser(@Param('id', ParseIntPipe) id: number): Promise<User> {
     try {
-      const deletedUser = await this.userService.deleteUser({ id: userId });
+      const deletedUser = await this.userService.deleteUser({ id });
 
       if (!deletedUser) {
         throw new NotFoundException(`User with ID ${id} not found`);
@@ -113,7 +96,6 @@ export class UserController {
       return deletedUser;
     } catch (error) {
       console.error('Error deleting user:', error);
-
       throw new InternalServerErrorException('Failed to delete user');
     }
   }

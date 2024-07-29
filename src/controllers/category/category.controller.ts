@@ -7,6 +7,7 @@ import {
   InternalServerErrorException,
   NotFoundException,
   Param,
+  ParseIntPipe,
   Post,
   Put,
 } from '@nestjs/common';
@@ -18,15 +19,11 @@ export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 
   @Get(':id')
-  async getCategoryById(@Param('id') id: string): Promise<Category> {
-    const categoryId = Number(id);
-
-    if (Number.isNaN(categoryId)) {
-      throw new BadRequestException(`Invalid Category ID: ${id}`);
-    }
-
+  async getCategoryById(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<Category> {
     const category = await this.categoryService.category(
-      { id: categoryId },
+      { id },
       {
         include: {
           creations: true,
@@ -63,18 +60,12 @@ export class CategoryController {
 
   @Put(':id')
   async updateCategory(
-    @Param('id') id: string,
+    @Param('id', ParseIntPipe) id: number,
     @Body() data: Prisma.CategoryUpdateInput,
   ): Promise<Category> {
-    const categoryId = Number(id);
-
-    if (Number.isNaN(categoryId)) {
-      throw new BadRequestException(`Invalid Category ID: ${id}`);
-    }
-
     try {
       const updatedCategory = await this.categoryService.updateCategory({
-        where: { id: categoryId },
+        where: { id },
         data,
       });
 
@@ -91,16 +82,12 @@ export class CategoryController {
   }
 
   @Delete(':id')
-  async deleteCategory(@Param('id') id: string): Promise<Category> {
-    const categoryId = Number(id);
-
-    if (Number.isNaN(categoryId)) {
-      throw new BadRequestException(`Invalid Category ID: ${id}`);
-    }
-
+  async deleteCategory(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<Category> {
     try {
       const deletedCategory = await this.categoryService.deleteCategory({
-        id: categoryId,
+        id,
       });
 
       if (!deletedCategory) {

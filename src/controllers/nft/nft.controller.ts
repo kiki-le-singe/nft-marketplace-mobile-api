@@ -7,6 +7,7 @@ import {
   InternalServerErrorException,
   NotFoundException,
   Param,
+  ParseIntPipe,
   Post,
   Put,
 } from '@nestjs/common';
@@ -18,15 +19,9 @@ export class NftController {
   constructor(private readonly nftService: NftService) {}
 
   @Get(':id')
-  async getNftById(@Param('id') id: string): Promise<Nft> {
-    const nftId = Number(id);
-
-    if (Number.isNaN(nftId)) {
-      throw new BadRequestException(`Invalid NFT ID: ${id}`);
-    }
-
+  async getNftById(@Param('id', ParseIntPipe) id: number): Promise<Nft> {
     const nft = await this.nftService.nft(
-      { id: nftId },
+      { id },
       {
         include: {
           author: true,
@@ -62,18 +57,12 @@ export class NftController {
 
   @Put(':id')
   async updateNft(
-    @Param('id') id: string,
+    @Param('id', ParseIntPipe) id: number,
     @Body() data: Prisma.NftUpdateInput,
   ): Promise<Nft> {
-    const nftId = Number(id);
-
-    if (Number.isNaN(nftId)) {
-      throw new BadRequestException(`Invalid NFT ID: ${id}`);
-    }
-
     try {
       const updatedNft = await this.nftService.updateNft({
-        where: { id: nftId },
+        where: { id },
         data,
       });
 
@@ -90,15 +79,9 @@ export class NftController {
   }
 
   @Delete(':id')
-  async deleteNft(@Param('id') id: string): Promise<Nft> {
-    const nftId = Number(id);
-
-    if (Number.isNaN(nftId)) {
-      throw new BadRequestException(`Invalid NFT ID: ${id}`);
-    }
-
+  async deleteNft(@Param('id', ParseIntPipe) id: number): Promise<Nft> {
     try {
-      const deletedNft = await this.nftService.deleteNft({ id: nftId });
+      const deletedNft = await this.nftService.deleteNft({ id });
 
       if (!deletedNft) {
         throw new NotFoundException(`NFT with ID ${id} not found`);
